@@ -1,0 +1,121 @@
+{
+  "name": "My workflow 14",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0006ec5b-2715-425f-aafe-2d7d10d122b9",
+      "name": "Telegram Trigger",
+      "webhookId": "546fc1ad-7453-4464-abbe-6f849d965a30",
+      "credentials": {
+        "telegramApi": {
+          "id": "Oe3oOsQNu7srxcCt",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "81e452a0-fec2-45d8-ac92-9f24ee02106b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        260,
+        220
+      ],
+      "id": "b927eb4b-03a1-4831-8da9-353a294f9049",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "aYpptz7BmBSmwpvD",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.message.chat.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        420,
+        220
+      ],
+      "id": "10500efb-3c3f-4106-9a98-42fd77927347",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "06ed2d19-9e58-4f37-b55f-1c625a1ef640",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dcdd37b26aeb17e62394a7c40a65402af2fa9f2e7a3dbea5ab06388ff82a61ef"
+  },
+  "id": "QzqoZHDh6us8kR4i",
+  "tags": []
+}
